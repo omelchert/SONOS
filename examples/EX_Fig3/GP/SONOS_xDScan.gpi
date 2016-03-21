@@ -1,0 +1,95 @@
+# FILE: SONOS_xDScan.gpi  
+#
+# FIGURE CAPTION (DRAFT):
+#
+# (Color online)  Sensitivity of the photoacoustic signal $p_{\rm D}(t)$ on a
+# radial deviation of the detection point $\vec{r}_{\rm D}$ from the beam axis,
+# realized by setting $x_{\rm D} \neq 0~{\rm cm}$, as explained in the text.  
+# The subfigures refer to different distances $z_{\rm D}$, where 
+# (a) $z_{\rm D}=-0.2~{\rm cm}$ is located in the acoustic NF with $D=0.76$, 
+# (b) $z_{\rm D}=-1.0~{\rm cm}$ ($D=11.4$) in the ``early'' FF, and, 
+# (c) $z_{\rm D}=-5.0~{\rm cm}$ ($D=19.0$) in the ``deep'' FF. 
+#
+# AUTHOR: O. Melchert
+# DATE:   21.03.2016
+set terminal postscript enhanced eps color lw 1.5 22 font "Times-Roman"
+set output "./FIGS/SONOS_xDScan_NF_FF.eps"
+
+set label 100 "(a)" at screen 0.01,0.96 font "Times-Roman"
+set label 101 "(b)" at screen 0.01,0.66 font "Times-Roman"
+set label 102 "(c)" at screen 0.01,0.36 font "Times-Roman"
+set label 103 "{/Times-Roman=100 DRAFT}" at screen 0.41,0.5 center rotate by 45 tc "grey" front 
+set label 1   "{/Times-Italic c}{/Symbol t} [cm]" right at screen 0.82,0.04
+set label 22 "{/Times-Italic p_{/Times-Roman=14 D}}({/Times-Italic t}) [a.u.]" rotate by 90 right at screen 0.025,0.91
+set label 23 "{/Times-Italic p_{/Times-Roman=14 D}}({/Times-Italic t}) [a.u.]" rotate by 90 right at screen 0.025,0.61
+set label 24 "{/Times-Italic p_{/Times-Roman=14 D}}({/Times-Italic t}) [a.u.]" rotate by 90 right at screen 0.025,0.31
+set label 31 "{/Times-Italic z}_{/Times-Roman=14 D} = -5.0\n{/Times-Italic D} = 19.0" right at screen 0.595,0.34 front
+set label 32 "{/Times-Italic z}_{/Times-Roman=14 D} = -1.0\n{/Times-Italic D} = 11.4" right at screen 0.595,0.64 front
+set label 33 "{/Times-Italic z}_{/Times-Roman=14 D} = -0.2\n{/Times-Italic D} = 0.76" right at screen 0.595,0.94 front
+
+set style line 1 lw 1.5 lt 1 lc rgb "#AA0000" dashtype 1
+set style line 2 lw 1.5 lt 1 lc rgb "#0000AA" dashtype 1
+set style line 3 lw 1.5 lt 1 lc rgb "black" dashtype "-"
+set style line 4 lw 1.5 lt 1 lc rgb "grey" dashtype "."
+set style rect fc lt -1 fs solid 0.15 noborder 
+set style rect fc lt -1 fs solid 0.15 noborder 
+
+set key samplen 1.20 at graph 1.,0.96
+set xr [-0.025:0.15]
+set yr [-0.6:1.2]
+set xtics ( "" 0.0, "" 0.05, "" 0.1) 
+set ytics ("" -1.,"" -0.5,"" 0.,"" 0.5,"" 1.0)
+set tics nomirror
+set xzeroaxis
+unset x2tics
+
+set obj 21 rect from 0.0, graph 0 to 0.05, graph 1 fc "#AAAAAA" behind
+set obj 22 rect from 0.05, graph 0 to 0.1, graph 1 fc "#111111" behind
+set size 0.85,1.
+set lmargin at screen 0.07
+set rmargin at screen 0.82
+
+set multiplot
+
+# FIG 3 (a): near field simulation at zD = -0.2 cm 
+        set bmargin at screen 0.68
+        set tmargin at screen 0.98
+
+        p "../cyl_2Layer_low_high_zD0.2_xD0.00.dat" u ($2):($3/0.07) w l ls 1 dashtype 1 t "{/Times-Italic x}_{/Times-Roman=14 D} = 0.0"\
+        , "../cyl_2Layer_low_high_zD0.2_xD0.10.dat" u ($2):($3/0.07) w l ls 1 dashtype "-" t "0.1"\
+        , "../cyl_2Layer_low_high_zD0.2_xD0.20.dat" u ($2):($3/0.07) w l ls 1 dashtype "." t "0.2"
+
+unset label 100
+unset label 101
+unset label 102
+unset label 1
+unset label 22
+unset label 23
+unset label 24
+unset label 33
+
+# FIG 3 (b): early far field simulation at zD = -1.0 cm 
+        set bmargin at screen 0.38
+        set tmargin at screen 0.68
+
+        p "../cyl_2Layer_low_high_zD1.0_xD0.00.dat" u ($2):($3/0.07) w l ls 2 dashtype 1 t "{/Times-Italic x}_{/Times-Roman=14 D} = 0.0"\
+        , "../cyl_2Layer_low_high_zD1.0_xD0.10.dat" u ($2):($3/0.07) w l ls 2 dashtype "-" t "0.1"\
+        , "../cyl_2Layer_low_high_zD1.0_xD0.20.dat" u ($2):($3/0.07) w l ls 2 dashtype "." t "0.2"
+
+unset label 32 
+
+# FIG 3 (c): deep far field simulation at zD = -5.0 cm 
+        set bmargin at screen 0.08
+        set tmargin at screen 0.38
+        set xtics ( -0.1, 0.0, 0.05, 0.1) 
+
+        p "../cyl_2Layer_low_high_zD5.0_xD0.00.dat" u ($2):($3/0.045) w l ls 2 dashtype 1 t "{/Times-Italic x}_{/Times-Roman=14 D} = 0.0"\
+        , "../cyl_2Layer_low_high_zD5.0_xD0.10.dat" u ($2):($3/0.045) w l ls 2 dashtype "-" t "0.1"\
+        , "../cyl_2Layer_low_high_zD5.0_xD0.20.dat" u ($2):($3/0.045) w l ls 2 dashtype "." t "0.2"
+
+unset label 31
+unset obj 21
+unset obj 22
+
+unset multiplot
+# EOF: SONOS_xDScan.gpi
