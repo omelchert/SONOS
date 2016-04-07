@@ -1,7 +1,6 @@
-# FILE: main_EX_Fig2a.py 
+# FILE: main_EX_Fig6.py 
 #
-# USAGE EXAMPLE FOR SONOS:
-#   main code implementing problem setup consisting of 2 absorbing layers 
+# APPROXIMATE PREDICTOR FOR INITIAL ACOUSTIC STRESS
 #
 # AUTHOR: O. Melchert
 # DATE:   21.03.2016
@@ -57,4 +56,4 @@ def main():
         print "# MSE ", zD, mse/p_zD_t.size
 
 main()
-# EOF: main_EX_Fig2a.py 
+# EOF: main_EX_Fig6.py 

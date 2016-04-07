@@ -1,7 +1,7 @@
-# FILE: main_EX_Fig2a.py 
-#
-# USAGE EXAMPLE FOR SONOS:
-#   main code implementing problem setup consisting of 2 absorbing layers 
+# FILE: main_EX_Fig5a_PI.py 
+# 
+# MODELING OF SINGLE LAYER EXPERIMENT BY E. BLUMENROETHER
+# TISSUE PHANTOM: PI
 #
 # AUTHOR: O. Melchert
 # DATE:   21.03.2016
@@ -55,4 +55,4 @@ def main():
         print "# MSE ", zD, mse/p_zD_t.size
 
 main()
-# EOF: main_EX_Fig2a.py 
+# EOF: main_EX_Fig5a_PI.py 
