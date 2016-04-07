@@ -1,0 +1,109 @@
+# LAYERED MEDIA: THEORY + EXPERIMENT 
+#
+# AUTHOR: O. Melchert
+# DATE:   09.03.2016
+set terminal postscript enhanced eps color lw 1.5 22 font "Times-Roman"
+set output "./FIGS/TvsE_pz_PI_PII_PIII.eps"
+
+set label 100 "(a)" at screen 0.01,0.96 font "Times-Roman"
+set label 101 "(b)" at screen 0.01,0.66 font "Times-Roman"
+set label 102 "(c)" at screen 0.01,0.36 font "Times-Roman"
+set label 103 "{/Times-Roman=100 DRAFT}" at screen 0.43,0.5 center rotate by 25 tc "grey" front 
+
+datFile_ex1 = "./dummy.dat"
+datFile_ex2 = "./dummy.dat"
+datFile_ex3 = "./dummy.dat"
+
+datFile_th1 = "../T_PI.dat"
+datFile_th2 = "../T_PII.dat"
+datFile_th3 = "../T_PIII.dat"
+
+LW=2.
+set style line 1 lw LW lt 1 lc rgb "#FF8C00" dashtype 1
+set style line 2 lw LW lt 1 lc rgb "#0000AA" dashtype "-"
+set style line 3 lw LW lt 1 lc rgb "black" dashtype "-"
+set style line 4 lw LW lt 1 lc rgb "grey" dashtype "."
+
+set style rect fc lt -1 fs solid 0.15 noborder 
+set style rect fc lt -1 fs solid 0.15 noborder 
+
+xMax = 0.82
+set lmargin at screen 0.07
+set rmargin at screen xMax
+set tics nomirror
+set xzeroaxis
+
+set xr [-0.1:0.4]
+set yr [-0.04:0.1]
+set ytics ("" -0.03,"" 0.,"" 0.0,"" 0.03,"" 0.06,"" 0.09)
+
+set label 1 "{/Times-Italic c}{/Symbol t} [cm]" right at screen xMax,0.04
+set label 8 "{/Times-Italic z} [cm]" right at screen xMax,1.03
+set label 21 "{/Times-Italic X}({/Times-Italic t}) [a.u.]" rotate by 90 right at screen 0.025,0.91
+set label 22 "{/Times-Italic X}({/Times-Italic t}) [a.u.]" rotate by 90 right at screen 0.025,0.61
+set label 23 "{/Times-Italic X}({/Times-Italic t}) [a.u.]" rotate by 90 right at screen 0.025,0.31
+
+N = 1
+
+set size 0.85,1.07
+
+set multiplot
+
+set bmargin at screen 0.68
+set tmargin at screen 0.98
+set xtics ("" -0.1, "" 0.0, "" 0.1, "" 0.2, "" 0.3, "" 0.4 ) 
+set key samplen 1.8
+
+
+x0=0.3
+set xtics nomirror
+set x2tics
+set link x2 via x+x0 inverse x-x0
+set x2tics (-0.1+x0,0.0+x0,0.1+x0,0.2+x0,0.3+x0)
+
+
+set obj 11 rect from 0.0, graph 0 to 0.095, graph 1 fc "#111111" behind
+
+c0=150000
+p datFile_ex1 every N u ($1*c0-0.525):(-$2-0.01) w l ls 1 t "{/Times-Italic X}({/Times-Italic t}) = {/Times-Italic V}_{/Times-Roman=14 T}({/Times-Italic t})"\
+, datFile_th1 u ($2):($4*0.0065) w l ls 2 t "{/Times-Italic p}_{/Times-Roman=14 D}({/Times-Italic t})"
+
+unset obj 11 
+unset label 1 
+unset label 8 
+unset label 21
+unset label 22
+unset label 23
+
+
+set bmargin at screen 0.38
+set tmargin at screen 0.68
+set xtics ("" -0.1, "" 0.0, "" 0.1, "" 0.2, "" 0.3, "" 0.4 ) 
+unset key
+unset x2tics
+
+set obj 21 rect from 0.0, graph 0 to 0.108, graph 1 fc "#AAAAAA" behind
+set obj 22 rect from 0.108, graph 0 to 0.108+0.096, graph 1 fc "#111111" behind
+
+c0=150000
+p datFile_ex2 every N u ($1*c0-0.52):(-$2-0.008) w l ls 1 t "E"\
+, datFile_th2 u ($2):($4*0.0065) w l ls 2 t "T"
+
+
+set bmargin at screen 0.08
+set tmargin at screen 0.38
+set xtics ( -0.1, 0.0, 0.1, 0.2, 0.3, "" 0.4) 
+unset key
+unset x2tics
+
+set obj 31 rect from 0.0, graph 0 to 0.2, graph 1 fc "#AAAAAA" behind
+set obj 32 rect from 0.2, graph 0 to 0.295, graph 1 fc "#111111" behind
+
+c0=150000
+p datFile_ex3 every N u ($1*c0-0.52):(-$2-0.005) w l ls 1 t "E"\
+, datFile_th3 u ($2):($4*0.0065) w l ls 2 t "T"
+
+unset obj 31
+unset obj 32
+
+unset multiplot
