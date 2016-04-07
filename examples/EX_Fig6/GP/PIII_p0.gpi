@@ -1,0 +1,107 @@
+# LAYERED MEDIA: THEORY + EXPERIMENT 
+#
+# AUTHOR: O. Melchert
+# DATE:   06.04.2016
+set terminal postscript enhanced eps color lw 1.5 22 font "Times-Roman"
+set output "./FIGS/TvsE_p0_predictor_MSE_PIII.eps"
+
+
+set label 100 "(a)" at screen 0.01,0.97 font "Times-Roman"
+set label 101 "(b)" at screen 0.01,0.37 font "Times-Roman"
+set label 103 "{/Times-Roman=100 DRAFT}" at screen 0.43,0.5 center rotate by 25 tc "grey" front 
+
+datFile_exPIII  = "./dummy.dat"
+datFile_thPIII  = "../cyl_PIII_zD0.3.dat"
+datFile_thPIIIb = "../cyl_PIII_zD0.9.dat"
+datFile_thPIIIc = "../cyl_PIII_zD4.dat"
+
+LW=2.
+set style line 1 lw LW lt 1 lc rgb "#FF8C00" dashtype 1
+set style line 2 lw LW lt 1 lc rgb "#0000AA" dashtype "-"
+set style line 3 lw LW lt 1 lc rgb "black" dashtype "."
+set style line 4 lw LW lt 1 lc rgb "grey" dashtype "."
+
+set style rect fc lt -1 fs solid 0.15 noborder 
+set style rect fc lt -1 fs solid 0.15 noborder 
+
+xMax = 0.82
+set lmargin at screen 0.07
+set rmargin at screen xMax
+set tics nomirror
+
+
+set size 0.85,1.0
+set multiplot
+
+# VISUAL ACCOUNT OF PREDICTOR p0FF
+
+        set bmargin at screen 0.45
+        set tmargin at screen 0.93
+
+        set xr [-0.03:0.51]
+        set yr [0.0:0.011]
+        set ytics ("" 0.0,"" 0.003,"" 0.006,"" 0.009,"" 0.011,"" 0.014)
+        set xtics ( -0.1, 0.0, 0.1, 0.2, 0.3,  0.4) 
+        set xtics nomirror
+        set x2tics
+        x0=0.3
+        set link x2 via x+x0 inverse x-x0
+        set x2tics (-0.1+x0,0.0+x0,0.1+x0,0.2+x0,0.3+x0,0.4+x0)
+
+        set key samplen 2.1 spacing 1.4 reverse Left at screen 0.9,0.92
+        set xzeroaxis
+
+        set label 1 "{/Times-Italic c}{/Symbol t} [cm]" right at screen xMax,0.41
+        set label 8 "{/Times-Italic z} [cm]" right at screen xMax,0.98
+        set label 22 "{/Times-Italic p_{/Times-Roman=14 0,FF}(c{/Symbol t})} [a.u.]" rotate by 90 right at screen 0.025,0.83
+
+        set obj 31 rect from 0.0, graph 0 to 0.2, graph 1 fc "#AAAAAA" behind
+        set obj 32 rect from 0.2, graph 0 to 0.295, graph 1 fc "#111111" behind
+
+        c0=150000
+        p datFile_thPIII  u ($2):($3) w l ls 3 dashtype 1 t "T - {/Times-Italic p_{/Times-Roman=14 0}(c{/Symbol t})}"\
+        , datFile_exPIII  u ($1+0.005):($3*7.5) w l ls 1 t "E - {/Times-Italic z}_{/Times-Roman=14 D} = -0.3 cm"\
+        , datFile_thPIII  u ($2):($5) w l ls 2 t "T - {/Times-Italic z}_{/Times-Roman=14 D} = -0.3 cm"\
+        , datFile_thPIIIb u ($2):($5) w l ls 2 dashtype "-." t "T - {/Times-Italic z}_{/Times-Roman=14 D} = -0.9 cm"\
+        , datFile_thPIIIc u ($2):($5) w l ls 2 dashtype "." t "T - {/Times-Italic z}_{/Times-Roman=14 D} = -4.0 cm"\
+
+        unset obj 31
+        unset obj 32
+        unset label 1
+        unset label 8
+        unset label 22
+
+# MSE OF PREDICTOR p0FF
+
+        set bmargin at screen 0.07
+        set tmargin at screen 0.37
+        
+        yMin=0.000000009
+        set yr [yMin:0.000009]
+        set xr [0.1:5]
+        unset x2tics
+        set logs 
+        set format y "10^{%L}"
+        set ytics (0.00000001,0.0000001,0.000001)
+        set xtics (0.1,0.2,0.4,0.8,1.6)
+
+        set label 13 "-{/Times-Italic z}_{/Times-Roman=14 D} [cm]" right at screen xMax,0.03
+        set label 14 "{/Times-Roman MSE}" right at screen 0.14,0.34
+        #set label 14 "{/Times-Roman MSE}" rotate by 90 right at screen 0.1,0.19
+
+        set arrow nohead from 0.1,9*10**(-7) to 0.3,9*10**(-7) ls 3 dashtype '.'
+        set arrow nohead from 0.3,9*10**(-7) to 0.3,yMin ls 3 dashtype '.'
+
+        set arrow nohead from 0.1,6.222*10**(-8) to 2.0,6.222*10**(-8) ls 3 dashtype '.'
+        set arrow nohead from 2.0,6.222*10**(-8) to 2.0,yMin ls 3 dashtype '.'
+
+        p '../MSE.dat' u (abs($3)):4 w l ls 3 dashtype '-' notitle\
+        , '<grep " -0.3 " ../MSE.dat' u (abs($3)):4 w p ls 2 pt 7 ps 2.0 notitle\
+        , '<grep " -2.0 " ../MSE.dat' u (abs($3)):4 w p ls 2 pt 7 ps 2.0 notitle
+
+        unset label 13
+        unset label 14
+
+        
+
+unset multiplot
