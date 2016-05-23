@@ -1,0 +1,43 @@
+set terminal postscript enhanced eps color lw 1.5 24 font "Times-Roman"
+set output "./FIGS/Fig1b.eps"
+
+dat1 = "../cyl_zD0.50_a0.1_R2.0.dat"
+dat2 = "../cyl_zD0.50_a0.1_R4.0.dat"
+dat3 = "../cyl_zD0.50_a0.1_R8.0.dat"
+
+set label 103 "{/Times-Roman=100 DRAFT}" at screen 0.43,0.4 center rotate by 25 tc "grey" front 
+set label 100 "(b)" at screen 0.01,0.67 font "Times-Roman"
+set label 1   "{/Times-Italic c}{/Symbol t} [cm]" right at screen 0.7,0.04
+set label 22  "{/Times-Italic p}({/Symbol t}) [a.u.]" rotate by 90 right at screen 0.025,0.62
+
+
+set style line 1 lw 1.5 lt 1 lc rgb "#AA0000" dashtype 1
+set style line 2 lw 1.5 lt 1 lc rgb "#0000AA" dashtype 1
+set style line 3 lw 2.0 lt 1 lc rgb "black" dashtype "-"
+set style line 4 lw 1.5 lt 1 lc rgb "grey" dashtype "."
+set style rect fc lt -1 fs solid 0.15 noborder 
+set style rect fc lt -1 fs solid 0.15 noborder 
+
+set key samplen 1.20 at graph 0.99,0.96 
+set xr [-0.025:0.16]
+set yr [-0.43:1.1]
+set ytics ("" -0.25,"" 0.,"" 0.25, "" 0.5, "" 0.75, "" 1.0)
+set tics nomirror
+set xzeroaxis
+unset x2tics
+
+set lmargin at screen 0.07
+set rmargin at screen 0.69
+set size 0.7,0.7
+
+set bmargin at screen 0.08
+set tmargin at screen 0.68
+set xtics (  0.0,  0.05,  0.1) 
+
+set obj 21 rect from 0.0, graph 0 to 0.1, graph 1 fc "#222222" behind
+
+FAC=0.12
+p dat1 u 2:($3/FAC) w l ls 2 dashtype 1 t "{/Times-Italic d} = 2 {/Times-Roman cm}"\
+, dat2 u 2:($3/FAC) w l ls 2 dashtype "-" t "4 {/Times-Roman cm}"\
+, dat3 u 2:($3/FAC) w l ls 2 dashtype "." t "8 {/Times-Roman cm}"\
+
